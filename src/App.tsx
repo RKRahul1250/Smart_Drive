@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UploadZone } from './components/upload/UploadZone';
 import { UploadQueue } from './components/upload/UploadQueue';
@@ -11,12 +11,14 @@ function App() {
   const { theme, toggleTheme } = useThemeStore();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
+      root.style.colorScheme = 'dark';
     } else {
       root.classList.remove('dark');
+      root.style.colorScheme = 'light';
     }
   }, [theme]);
 
@@ -57,7 +59,7 @@ function App() {
               </button>
               <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 p-0.5 shadow-lg shadow-blue-500/20">
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-white dark:bg-slate-950">
-                  <User className="h-4 w-4" />
+                  <User className="h-5 w-5" />
                 </div>
               </div>
             </div>
@@ -163,7 +165,7 @@ function App() {
                         layout
                         className={`absolute left-1 top-1 h-9 w-9 rounded-full bg-white shadow transition-transform duration-300 ease-out ${theme === 'dark' ? 'translate-x-[calc(100%-0.5rem)] bg-slate-900 text-amber-300' : 'translate-x-0 bg-amber-400 text-slate-900'}`}
                       >
-                        {theme === 'dark' ? <Moon className="h-4 w-4" /> : <SunMedium className="h-4 w-4" />}
+                        {theme === 'dark' ? <Moon className="h-5 w-5" /> : <SunMedium className="h-5 w-5" />}
                       </motion.span>
                     </button>
                   </div>

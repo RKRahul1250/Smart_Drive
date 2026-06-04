@@ -100,18 +100,18 @@ export const AssetLibrary = () => {
               <Button
                 variant={viewMode === 'list' ? 'secondary' : 'ghost'}
                 size="icon"
-                className={`h-8 w-8 transition-all ${viewMode === 'list' ? 'bg-gray-700 text-white shadow-lg' : 'text-gray-400'}`}
+                className={`h-10 w-10 transition-all ${viewMode === 'list' ? 'bg-gray-700 text-white shadow-lg' : 'text-gray-400'}`}
                 onClick={() => setViewMode('list')}
               >
-                <List className="h-4 w-4" />
+                <List className="h-5 w-5" />
               </Button>
               <Button
                 variant={viewMode === 'grid' ? 'secondary' : 'ghost'}
                 size="icon"
-                className={`h-8 w-8 transition-all ${viewMode === 'grid' ? 'bg-gray-700 text-white shadow-lg' : 'text-gray-400'}`}
+                className={`h-10 w-10 transition-all ${viewMode === 'grid' ? 'bg-gray-700 text-white shadow-lg' : 'text-gray-400'}`}
                 onClick={() => setViewMode('grid')}
               >
-                <LayoutGrid className="h-4 w-4" />
+                <LayoutGrid className="h-5 w-5" />
               </Button>
             </div>
             <AnimatePresence>
@@ -159,11 +159,11 @@ export const AssetLibrary = () => {
               
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" className="gap-2 border-gray-600 dark:border-gray-500 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => toggleSort('uploadDate')}>
-                  <ArrowUpDown className="h-4 w-4" />
+                  <ArrowUpDown className="h-5 w-5" />
                   Date
                 </Button>
                 <Button variant="outline" size="sm" className="gap-2 border-gray-600 dark:border-gray-500 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => toggleSort('name')}>
-                  <ArrowUpDown className="h-4 w-4" />
+                  <ArrowUpDown className="h-5 w-5" />
                   Name
                 </Button>
               </div>
