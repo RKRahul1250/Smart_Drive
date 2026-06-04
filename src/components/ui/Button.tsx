@@ -15,11 +15,11 @@ export const Button = ({
 }: ButtonProps) => {
   const variantClasses = {
     default: 'bg-blue-600 text-white hover:bg-blue-500',
-    ghost: 'bg-transparent text-gray-900 hover:bg-gray-100',
+    ghost: 'bg-transparent text-white hover:bg-white/10',
     primary: 'bg-blue-600 text-white hover:bg-blue-500',
     secondary: 'bg-gray-800 text-white hover:bg-gray-700',
     danger: 'bg-red-600 text-white hover:bg-red-500',
-    outline: 'bg-transparent text-gray-900 border border-gray-300 hover:bg-gray-100',
+    outline: 'bg-transparent text-white border border-gray-600 hover:bg-white/10',
   }[variant];
 
   const sizeClasses = {
