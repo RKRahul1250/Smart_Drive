@@ -44,7 +44,7 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 sm:p-6 md:p-8">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm transition-opacity"
@@ -52,7 +52,7 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
       />
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-6xl h-[85vh] bg-white dark:bg-gray-950 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div className="relative w-full max-w-6xl max-h-[calc(100vh-2rem)] bg-white dark:bg-gray-950 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-3 min-w-0">

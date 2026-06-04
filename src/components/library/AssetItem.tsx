@@ -92,9 +92,8 @@ export const AssetItem = ({ asset, viewMode, onPreview }: AssetItemProps) => {
         animate="visible"
         exit="exit"
         layout
-        whileHover={{ scale: 1.005, backgroundColor: 'rgba(255, 255, 255, 0.03)' }}
-        className={`group flex items-center gap-4 rounded-lg border p-3 transition-all cursor-pointer
-          ${isSelected ? 'border-blue-500 bg-blue-500/10' : 'border-gray-800'}`}
+        className={`group flex items-center gap-4 rounded-lg border p-3 transition-colors duration-200 cursor-pointer
+          ${isSelected ? 'border-blue-500 bg-blue-500/10' : 'border-gray-800 hover:border-gray-600'}`}
         onClick={() => onPreview(asset)}
       >
         <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
@@ -199,8 +198,7 @@ export const AssetItem = ({ asset, viewMode, onPreview }: AssetItemProps) => {
       animate="visible"
       exit="exit"
       layout
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className={`group relative rounded-xl border p-2 transition-all hover:shadow-xl cursor-pointer
+      className={`group relative rounded-xl border p-2 transition-colors duration-200 cursor-pointer
         ${isSelected ? 'border-blue-500 bg-blue-500/10' : 'border-gray-800 bg-gray-950/50'}`}
       onClick={() => onPreview(asset)}
     >
