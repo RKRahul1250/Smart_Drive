@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 interface AssetItemProps {
   asset: Asset;
   viewMode: ViewMode;
-  onPreview: (asset: Asset) => void;
+  onPreview: () => void;
 }
 
 export const AssetItem = ({ asset, viewMode, onPreview }: AssetItemProps) => {
@@ -94,7 +94,7 @@ export const AssetItem = ({ asset, viewMode, onPreview }: AssetItemProps) => {
         layout
         className={`group flex items-center gap-4 rounded-lg border p-3 transition-colors duration-200 cursor-pointer
           ${isSelected ? 'border-blue-500 bg-blue-500/10' : 'border-gray-800 hover:border-gray-600'}`}
-        onClick={() => onPreview(asset)}
+        onClick={onPreview}
       >
         <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
           <div 
@@ -200,7 +200,7 @@ export const AssetItem = ({ asset, viewMode, onPreview }: AssetItemProps) => {
       layout
       className={`group relative rounded-xl border p-2 transition-colors duration-200 cursor-pointer
         ${isSelected ? 'border-blue-500 bg-blue-500/10' : 'border-gray-800 bg-gray-950/50'}`}
-      onClick={() => onPreview(asset)}
+      onClick={onPreview}
     >
       <div className="absolute top-3 left-3 z-10 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
         <div 

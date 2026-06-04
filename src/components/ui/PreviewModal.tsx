@@ -19,6 +19,7 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
       setBlobUrl(url);
       return () => URL.revokeObjectURL(url);
     }
+    setBlobUrl(null);
   }, [asset]);
 
   if (!isOpen || !asset) return null;
@@ -26,7 +27,6 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
   const isImage = asset.type.startsWith('image/');
   const isVideo = asset.type.startsWith('video/');
   const isPDF = asset.type === 'application/pdf';
-  const isMobile = typeof navigator !== 'undefined' && /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
 
   const handleDownload = () => {
     if (!blobUrl) return;
@@ -38,140 +38,99 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
     document.body.removeChild(a);
   };
 
-  const handleOpenPdfOnMobile = () => {
-    if (!blobUrl) return;
-    window.open(blobUrl, '_blank', 'noreferrer');
-  };
-
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 sm:p-6 md:p-8">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-gray-950/95"
-        onClick={onClose}
-      />
-
-      {/* Modal Content */}
-      <div className="relative w-full max-w-6xl max-h-[calc(100vh-2rem)] bg-white dark:bg-gray-950 rounded-2xl flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-950/80 p-4 sm:p-6 md:p-8" onClick={onClose}>
+      <section className="relative w-full max-w-7xl max-h-[90vh] overflow-hidden rounded-3xl border border-white/10 bg-slate-950 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <header className="flex items-center justify-between gap-4 border-b border-white/10 bg-slate-900 px-6 py-4">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="flex-shrink-0 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-              {isImage ? <ImageIcon className="h-5 w-5 text-purple-500" /> :
-               isVideo ? <Film className="h-5 w-5 text-blue-500" /> :
-               isPDF ? <FileText className="h-5 w-5 text-red-500" /> :
-               <FileIcon className="h-5 w-5 text-gray-500" />}
+            <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-800 text-slate-100">
+              {isImage ? <ImageIcon className="h-5 w-5 text-violet-300" /> :
+               isVideo ? <Film className="h-5 w-5 text-sky-300" /> :
+               isPDF ? <FileText className="h-5 w-5 text-rose-300" /> :
+               <FileIcon className="h-5 w-5 text-slate-400" />}
             </div>
             <div className="min-w-0">
-              <h3 className="text-lg font-semibold truncate leading-none mb-1">{asset.name}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider font-medium">{asset.type}</p>
+              <h2 className="truncate text-lg font-semibold text-white">{asset.name}</h2>
+              <p className="truncate text-xs uppercase tracking-[0.24em] text-slate-500">{asset.type}</p>
             </div>
           </div>
+
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="hidden sm:flex gap-2 transition-none" onClick={handleDownload}>
+            <Button variant="outline" size="sm" className="hidden sm:inline-flex gap-2 border-slate-700 text-slate-200 hover:bg-slate-800 transition-none" onClick={handleDownload}>
               <Download className="h-4 w-4" />
               Download
             </Button>
-            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full transition-none">
+            <Button variant="ghost" size="icon" className="text-slate-200 hover:bg-slate-800 transition-none" onClick={onClose}>
               <X className="h-5 w-5" />
             </Button>
           </div>
-        </div>
+        </header>
 
-        {/* Body */}
-        <div className="flex-grow overflow-hidden flex flex-col md:flex-row h-full">
-          {/* Main Preview Area */}
-          <div className="flex-grow bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4 sm:p-6 h-full overflow-hidden">
-            {isImage && blobUrl ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <img 
-                  src={blobUrl} 
-                  alt={asset.name} 
-                  className="max-w-full max-h-full object-contain rounded-lg"
+        <div className="grid h-full min-h-[calc(90vh-80px)] grid-cols-1 md:grid-cols-[2fr_360px] overflow-hidden">
+          <div className="relative overflow-hidden bg-slate-950 p-6 flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center">
+              {isImage && blobUrl ? (
+                <img
+                  src={blobUrl}
+                  alt={asset.name}
+                  className="max-h-full max-w-full rounded-2xl object-contain"
                 />
-              </div>
-            ) : isVideo && blobUrl ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <video 
-                  src={blobUrl} 
-                  controls 
-                  className="max-w-full max-h-full rounded-lg"
+              ) : isVideo && blobUrl ? (
+                <video
+                  src={blobUrl}
+                  controls
+                  className="max-h-full max-w-full rounded-2xl bg-black"
                 />
-              </div>
-            ) : isPDF && blobUrl ? (
-              isMobile ? (
-                <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-6 text-center">
-                  <div className="rounded-3xl bg-white/80 p-6">
-                    <FileText className="mx-auto mb-4 h-10 w-10 text-red-500" />
-                    <p className="text-sm text-gray-500">
-                      Some mobile browsers cannot display PDF previews inline. Tap Open PDF to view it in your device's built-in viewer.
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-3 w-full max-w-sm">
-                    <Button variant="outline" size="sm" className="gap-2 w-full transition-none" onClick={handleOpenPdfOnMobile}>
-                      <Download className="h-4 w-4" />
-                      Open PDF
-                    </Button>
-                    <Button variant="primary" size="sm" className="gap-2 w-full transition-none" onClick={handleDownload}>
-                      <Download className="h-4 w-4" />
-                      Download PDF
-                    </Button>
-                  </div>
-                </div>
+              ) : isPDF && blobUrl ? (
+                <iframe
+                  src={blobUrl}
+                  title={asset.name}
+                  className="h-full w-full rounded-2xl bg-white"
+                />
               ) : (
-                <div className="w-full h-full">
-                  <iframe 
-                    src={blobUrl}
-                    className="w-full h-full rounded-lg bg-white border-none"
-                    title={asset.name}
-                  />
+                <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/10 bg-slate-900 p-10 text-center">
+                  <FileIcon className="h-16 w-16 text-slate-500" />
+                  <p className="text-sm text-slate-400">Preview not available for this file type.</p>
+                  <Button variant="primary" size="sm" className="mt-3 gap-2 transition-none" onClick={handleDownload}>
+                    <Download className="h-4 w-4" />
+                    Download file
+                  </Button>
                 </div>
-              )
-            ) : (
-              <div className="flex flex-col items-center text-center p-8">
-                <div className="p-10 bg-white dark:bg-gray-800 rounded-3xl mb-6">
-                  <FileIcon className="h-20 w-20 text-gray-300" />
-                </div>
-                <p className="text-gray-500 text-lg">Preview not available for this file type</p>
-                <Button variant="primary" className="mt-6 gap-2 h-12 px-8 transition-none" onClick={handleDownload}>
-                  <Download className="h-5 w-5" />
-                  Download to View
-                </Button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
-          {/* Sidebar Info */}
-          <div className="w-full md:w-72 border-t md:border-t-0 md:border-l border-gray-100 dark:border-gray-800 p-6 bg-white dark:bg-gray-950 flex flex-col gap-6">
+          <aside className="border-t border-white/10 bg-slate-950/95 p-6 md:border-t-0 md:border-l flex flex-col gap-6 overflow-y-auto">
             <div>
-              <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">File Details</h4>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 mb-4">File details</p>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <HardDrive className="h-4 w-4 text-gray-400" />
+                  <HardDrive className="h-4 w-4 flex-shrink-0 text-slate-400" />
                   <div>
-                    <p className="text-xs text-gray-500">Size</p>
-                    <p className="text-sm font-medium">{(asset.size / 1024 / 1024).toFixed(2)} MB</p>
+                    <p className="text-xs text-slate-500">Size</p>
+                    <p className="text-sm font-medium text-white">{(asset.size / 1024 / 1024).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Calendar className="h-4 w-4 text-gray-400" />
+                  <Calendar className="h-4 w-4 flex-shrink-0 text-slate-400" />
                   <div>
-                    <p className="text-xs text-gray-500">Uploaded</p>
-                    <p className="text-sm font-medium">{format(asset.uploadDate, 'PPP p')}</p>
+                    <p className="text-xs text-slate-500">Uploaded</p>
+                    <p className="text-sm font-medium text-white">{format(asset.uploadDate, 'PPP p')}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-auto">
-              <Button variant="primary" className="w-full gap-2 md:hidden transition-none" onClick={handleDownload}>
+            <div className="mt-auto space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Actions</p>
+              <Button variant="primary" className="w-full gap-2 transition-none" onClick={handleDownload}>
                 <Download className="h-4 w-4" />
-                Download File
+                Download
               </Button>
             </div>
-          </div>
+          </aside>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
