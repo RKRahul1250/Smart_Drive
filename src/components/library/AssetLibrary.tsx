@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useState, useRef } from 'react';
-import { LayoutGrid, List, Search, ArrowUpDown, Trash2, Filter, Loader2, X, HardDrive, Calendar, Maximize2, Minimize2 } from 'lucide-react';
+import { LayoutGrid, List, Search, ArrowUpDown, Trash2, Filter, Loader2, X, HardDrive, Calendar } from 'lucide-react';
 import { 
   DndContext, 
   closestCenter,
@@ -42,7 +42,6 @@ export const AssetLibrary = () => {
   } = useAssetStore();
   const [previewAsset, setPreviewAsset] = useState<Asset | null>(null);
   const [previewSource, setPreviewSource] = useState<string | null>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const previewRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -65,32 +64,6 @@ export const AssetLibrary = () => {
       previewRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [previewAsset]);
-
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement === previewRef.current);
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
-
-  const toggleFullscreen = async () => {
-    if (!previewRef.current) return;
-
-    if (document.fullscreenElement === previewRef.current) {
-      await document.exitFullscreen();
-      return;
-    }
-
-    if (previewRef.current.requestFullscreen) {
-      await previewRef.current.requestFullscreen();
-    } else if ((previewRef.current as any).webkitRequestFullscreen) {
-      await (previewRef.current as any).webkitRequestFullscreen();
-    } else if ((previewRef.current as any).msRequestFullscreen) {
-      await (previewRef.current as any).msRequestFullscreen();
-    }
-  };
 
   useEffect(() => {
     fetchAssets();
@@ -190,9 +163,9 @@ export const AssetLibrary = () => {
         {previewAsset && (
           <div
             ref={previewRef}
-            className={`mb-6 rounded-3xl border border-gray-800 bg-gray-950 p-6 ${isFullscreen ? 'fixed inset-0 z-50 m-0 h-screen w-screen overflow-hidden rounded-none border-none bg-slate-950' : ''}`}
+            className="mb-6 rounded-3xl border border-gray-800 bg-gray-950 p-6"
           >
-            <div className={`${isFullscreen ? 'flex flex-col h-full' : ''}`}>
+            <div className="mx-auto flex w-full max-w-6xl flex-col rounded-[2rem] border border-slate-800 bg-slate-950 p-6 shadow-2xl">
               <div className="flex items-center justify-between gap-4 border-b border-gray-800 pb-4 mb-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-gray-400">Preview</p>
@@ -203,13 +176,6 @@ export const AssetLibrary = () => {
                 <button
                   type="button"
                   className="rounded-full border border-gray-700 bg-gray-900 p-2 text-gray-400 transition duration-200 hover:bg-gray-800 hover:text-white active:scale-95"
-                  onClick={toggleFullscreen}
-                >
-                  {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-                </button>
-                <button
-                  type="button"
-                  className="rounded-full border border-gray-700 bg-gray-900 p-2 text-gray-400 transition duration-200 hover:bg-gray-800 hover:text-white active:scale-95"
                   onClick={() => setPreviewAsset(null)}
                 >
                   <X className="h-4 w-4" />
@@ -217,14 +183,14 @@ export const AssetLibrary = () => {
               </div>
             </div>
 
-            <div className={`${isFullscreen ? 'flex flex-col gap-6 h-full' : 'grid gap-6 lg:grid-cols-[1.6fr_0.9fr]'}`}>
-              <div className={`rounded-3xl border border-gray-800 bg-black p-4 flex items-center justify-center ${isFullscreen ? 'flex-1 min-h-0' : ''}`}>
+            <div className="grid gap-6 lg:grid-cols-[1.6fr_0.9fr]">
+              <div className="rounded-3xl border border-gray-800 bg-black p-4 flex items-center justify-center min-h-[24rem]">
                 {previewSource ? (
                   previewAsset.type.startsWith('image/') ? (
                     <img
                       src={previewSource}
                       alt={previewAsset.name}
-                      className={`h-full w-full ${isFullscreen ? '' : 'max-h-[80vh]'} object-contain rounded-3xl`}
+                      className="h-full w-full max-h-[80vh] object-contain rounded-3xl"
                     />
                   ) : previewAsset.type.startsWith('video/') ? (
                     <video controls className="h-full w-full rounded-3xl bg-black">
@@ -255,7 +221,7 @@ export const AssetLibrary = () => {
                 )}
               </div>
 
-              <div className={`space-y-6 ${isFullscreen ? 'overflow-hidden' : ''}`}>
+              <div className="space-y-6">
                 <div className="rounded-3xl border border-gray-800 bg-gray-900 p-5">
                   <p className="text-sm font-semibold uppercase tracking-[0.24em] text-gray-400">File details</p>
                   <div className="mt-4 space-y-4 text-sm text-gray-300">
