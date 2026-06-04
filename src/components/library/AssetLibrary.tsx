@@ -158,11 +158,11 @@ export const AssetLibrary = () => {
               </div>
               
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="gap-2 border-gray-800 hover:bg-gray-800 text-gray-400 hover:text-white" onClick={() => toggleSort('uploadDate')}>
+                <Button variant="outline" size="sm" className="gap-2 border-gray-600 dark:border-gray-500 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => toggleSort('uploadDate')}>
                   <ArrowUpDown className="h-4 w-4" />
                   Date
                 </Button>
-                <Button variant="outline" size="sm" className="gap-2 border-gray-800 hover:bg-gray-800 text-gray-400 hover:text-white" onClick={() => toggleSort('name')}>
+                <Button variant="outline" size="sm" className="gap-2 border-gray-600 dark:border-gray-500 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => toggleSort('name')}>
                   <ArrowUpDown className="h-4 w-4" />
                   Name
                 </Button>
