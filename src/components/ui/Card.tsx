@@ -9,7 +9,7 @@ function cn(...inputs: ClassValue[]) {
 export const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      'rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-950',
+      'rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl dark:border-gray-800 dark:bg-gray-950',
       className
     )}
     {...props}

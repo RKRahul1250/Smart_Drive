@@ -30,7 +30,7 @@ export const Button = ({
 
   return (
     <button
-      className={`rounded-md inline-flex items-center justify-center transition ${variantClasses} ${sizeClasses} ${className}`.trim()}
+      className={`rounded-2xl inline-flex items-center justify-center gap-2 border border-transparent px-3 py-2 text-sm transition-all duration-300 ease-out shadow-sm hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 ${variantClasses} ${sizeClasses} ${className}`.trim()}
       {...props}
     >
       {children}
