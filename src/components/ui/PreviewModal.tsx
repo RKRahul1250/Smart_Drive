@@ -26,6 +26,7 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
   const isImage = asset.type.startsWith('image/');
   const isVideo = asset.type.startsWith('video/');
   const isPDF = asset.type === 'application/pdf';
+  const isMobile = typeof navigator !== 'undefined' && /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
 
   const handleDownload = () => {
     if (!blobUrl) return;
@@ -35,6 +36,11 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  };
+
+  const handleOpenPdfOnMobile = () => {
+    if (!blobUrl) return;
+    window.open(blobUrl, '_blank', 'noreferrer');
   };
 
   return (
@@ -93,13 +99,34 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
                 />
               </div>
             ) : isPDF && blobUrl ? (
-              <div className="w-full h-full">
-                <iframe 
-                  src={`${blobUrl}#view=FitH`}
-                  className="w-full h-full rounded-lg shadow-sm bg-white border-none"
-                  title={asset.name}
-                />
-              </div>
+              isMobile ? (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-6 text-center">
+                  <div className="rounded-3xl bg-white/80 p-6 shadow-sm">
+                    <FileText className="mx-auto mb-4 h-10 w-10 text-red-500" />
+                    <p className="text-sm text-gray-500">
+                      Some mobile browsers cannot display PDF previews inline. Tap Open PDF to view it in your device's built-in viewer.
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-3 w-full max-w-sm">
+                    <Button variant="outline" size="sm" className="gap-2 w-full" onClick={handleOpenPdfOnMobile}>
+                      <Download className="h-4 w-4" />
+                      Open PDF
+                    </Button>
+                    <Button variant="primary" size="sm" className="gap-2 w-full" onClick={handleDownload}>
+                      <Download className="h-4 w-4" />
+                      Download PDF
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-full">
+                  <iframe 
+                    src={blobUrl}
+                    className="w-full h-full rounded-lg shadow-sm bg-white border-none"
+                    title={asset.name}
+                  />
+                </div>
+              )
             ) : (
               <div className="flex flex-col items-center text-center p-8">
                 <div className="p-10 bg-white dark:bg-gray-800 rounded-3xl shadow-sm mb-6">
