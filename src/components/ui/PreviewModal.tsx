@@ -47,12 +47,12 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
     <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 sm:p-6 md:p-8">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-gray-950/95"
         onClick={onClose}
       />
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-6xl max-h-[calc(100vh-2rem)] bg-white dark:bg-gray-950 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <div className="relative w-full max-w-6xl max-h-[calc(100vh-2rem)] bg-white dark:bg-gray-950 rounded-2xl flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-3 min-w-0">
@@ -68,11 +68,11 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="hidden sm:flex gap-2" onClick={handleDownload}>
+            <Button variant="outline" size="sm" className="hidden sm:flex gap-2 transition-none" onClick={handleDownload}>
               <Download className="h-4 w-4" />
               Download
             </Button>
-            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
+            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full transition-none">
               <X className="h-5 w-5" />
             </Button>
           </div>
@@ -87,7 +87,7 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
                 <img 
                   src={blobUrl} 
                   alt={asset.name} 
-                  className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                  className="max-w-full max-h-full object-contain rounded-lg"
                 />
               </div>
             ) : isVideo && blobUrl ? (
@@ -95,24 +95,24 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
                 <video 
                   src={blobUrl} 
                   controls 
-                  className="max-w-full max-h-full rounded-lg shadow-lg"
+                  className="max-w-full max-h-full rounded-lg"
                 />
               </div>
             ) : isPDF && blobUrl ? (
               isMobile ? (
                 <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-6 text-center">
-                  <div className="rounded-3xl bg-white/80 p-6 shadow-sm">
+                  <div className="rounded-3xl bg-white/80 p-6">
                     <FileText className="mx-auto mb-4 h-10 w-10 text-red-500" />
                     <p className="text-sm text-gray-500">
                       Some mobile browsers cannot display PDF previews inline. Tap Open PDF to view it in your device's built-in viewer.
                     </p>
                   </div>
                   <div className="flex flex-col gap-3 w-full max-w-sm">
-                    <Button variant="outline" size="sm" className="gap-2 w-full" onClick={handleOpenPdfOnMobile}>
+                    <Button variant="outline" size="sm" className="gap-2 w-full transition-none" onClick={handleOpenPdfOnMobile}>
                       <Download className="h-4 w-4" />
                       Open PDF
                     </Button>
-                    <Button variant="primary" size="sm" className="gap-2 w-full" onClick={handleDownload}>
+                    <Button variant="primary" size="sm" className="gap-2 w-full transition-none" onClick={handleDownload}>
                       <Download className="h-4 w-4" />
                       Download PDF
                     </Button>
@@ -122,18 +122,18 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
                 <div className="w-full h-full">
                   <iframe 
                     src={blobUrl}
-                    className="w-full h-full rounded-lg shadow-sm bg-white border-none"
+                    className="w-full h-full rounded-lg bg-white border-none"
                     title={asset.name}
                   />
                 </div>
               )
             ) : (
               <div className="flex flex-col items-center text-center p-8">
-                <div className="p-10 bg-white dark:bg-gray-800 rounded-3xl shadow-sm mb-6">
+                <div className="p-10 bg-white dark:bg-gray-800 rounded-3xl mb-6">
                   <FileIcon className="h-20 w-20 text-gray-300" />
                 </div>
                 <p className="text-gray-500 text-lg">Preview not available for this file type</p>
-                <Button variant="primary" className="mt-6 gap-2 h-12 px-8" onClick={handleDownload}>
+                <Button variant="primary" className="mt-6 gap-2 h-12 px-8 transition-none" onClick={handleDownload}>
                   <Download className="h-5 w-5" />
                   Download to View
                 </Button>
@@ -164,7 +164,7 @@ export const PreviewModal = ({ asset, isOpen, onClose }: PreviewModalProps) => {
             </div>
 
             <div className="mt-auto">
-              <Button variant="primary" className="w-full gap-2 md:hidden" onClick={handleDownload}>
+              <Button variant="primary" className="w-full gap-2 md:hidden transition-none" onClick={handleDownload}>
                 <Download className="h-4 w-4" />
                 Download File
               </Button>
