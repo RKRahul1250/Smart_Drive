@@ -163,9 +163,8 @@ export const AssetLibrary = () => {
         {previewAsset && (
           <div
             ref={previewRef}
-            className="mb-6 rounded-3xl border border-gray-800 bg-gray-950 p-6"
+            className="mb-6 mx-auto flex w-full max-w-6xl flex-col rounded-[2rem] border border-slate-800 bg-slate-950 p-6 shadow-2xl"
           >
-            <div className="mx-auto flex w-full max-w-6xl flex-col rounded-[2rem] border border-slate-800 bg-slate-950 p-6 shadow-2xl">
               <div className="flex items-center justify-between gap-4 border-b border-gray-800 pb-4 mb-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-gray-400">Preview</p>
@@ -183,8 +182,8 @@ export const AssetLibrary = () => {
               </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-[1.6fr_0.9fr]">
-              <div className="rounded-3xl border border-gray-800 bg-black p-4 flex items-center justify-center min-h-[24rem]">
+            <div className="flex flex-col gap-6">
+              <div className="rounded-3xl overflow-hidden bg-black p-4 flex items-center justify-center min-h-[24rem]">
                 {previewSource ? (
                   previewAsset.type.startsWith('image/') ? (
                     <img
@@ -222,7 +221,7 @@ export const AssetLibrary = () => {
               </div>
 
               <div className="space-y-6">
-                <div className="rounded-3xl border border-gray-800 bg-gray-900 p-5">
+                <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.24em] text-gray-400">File details</p>
                   <div className="mt-4 space-y-4 text-sm text-gray-300">
                     <div className="flex items-center gap-3">
@@ -242,7 +241,7 @@ export const AssetLibrary = () => {
                   </div>
                 </div>
 
-                <div className="rounded-3xl border border-gray-800 bg-gray-900 p-5">
+                <div className="border-t border-gray-800 pt-6">
                   <p className="text-sm font-semibold uppercase tracking-[0.24em] text-gray-400">Actions</p>
                   <button
                     type="button"
@@ -264,7 +263,6 @@ export const AssetLibrary = () => {
               </div>
             </div>
           </div>
-        </div>
         )}
         {isLoading && assets.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
